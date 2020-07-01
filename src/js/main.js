@@ -7,6 +7,10 @@ import bidsPage from './pages/bidsPage';
 import errorPage from './pages/errorPage';
 
 
+const state = {};
+
+window.state = state;
+
 const routes = [
     {path: '/', component: homePage},
     {path: 'item', component: singleItem},
@@ -28,7 +32,7 @@ function router () {
     let currentPath = pathArray[0] === '' ? '/' : pathArray[1];
     currentPath = currentPath === '' ? '/' : currentPath; 
     const { component = errorPage } = findComponentByPath(currentPath, routes) || {};
-    component();
+    component(state);
 
 }
 
