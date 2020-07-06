@@ -23,5 +23,7 @@ export default async function(state){
 
     form.addEventListener('change', function(e){
         e.preventDefault();
+        state.filter.query = view.getInput();
+        console.log("state.filter.query", state.filter.query)
     })
 }

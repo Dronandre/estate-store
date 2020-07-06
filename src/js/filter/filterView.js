@@ -1,7 +1,9 @@
 import 'url-search-params-polyfill';
 
 const elements = {
-    filterSelect: document.querySelector('.filter__dropdown')
+    filterSelect: document.getElementsByClassName('filter__dropdown'),
+    filterRooms: document.getElementsByClassName('rooms__checkbox'),
+    filterFields: document.getElementsByClassName('range__input'),
 }
 
 export function render(params){
@@ -114,8 +116,43 @@ export function changeButtonText(number){
 
 export function getInput(){
     const searchParams = new URLSearchParams();
-
-    if (elements.filterSelect.value !== 'all' ) {
-        searchParams.append(elements.filterSelect.name, elements.filterSelect.value )
+     
+    if (elements.filterSelect[0].value !== 'all' ) {
+        searchParams.append(
+            elements.filterSelect[0].name, 
+            elements.filterSelect[0].value
+        );
     }
+
+    const roomsValues = [];
+    Array.from(elements.filterRooms).forEach((checkbox)=>{
+        if (checkbox.value !== '' && checkbox.checked) {
+            roomsValues.push(checkbox.value);            
+        }
+    });
+
+    const roomsValuesString = roomsValues.join(',');
+    
+    if (roomsValuesString !== ''){
+        searchParams.append('rooms', roomsValuesString);
+    }
+
+    Array.from(elements.filterFields).forEach((input)=>{
+        if (input.value !== '') {
+            searchParams.append(input.name, input.value);
+        }
+    })
+ 
+    const queryString = searchParams.toString();
+    
+    if (queryString) {
+        return '?' + queryString;
+    } else {
+        return '';
+    }
+    
+    
+   
+
+
 }
