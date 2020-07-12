@@ -1,8 +1,6 @@
 import Filter from './filterModel';
 import * as view from './filterView';
 
-
-
 export default async function(state){
     
     // Создаем объект фильтра
@@ -21,9 +19,21 @@ export default async function(state){
     // Прослушка объектов формы
     const form = document.querySelector('#filter-form');
 
-    form.addEventListener('change', function(e){
+    form.addEventListener('change', async function(e){
         e.preventDefault();
         state.filter.query = view.getInput();
-        console.log("state.filter.query", state.filter.query)
+        await state.filter.getResults();
+        view.changeButtonText(state.filter.result.length);
+    })
+
+    form.addEventListener('reset', async function(){
+        state.filter.query = '';
+        await state.filter.getResults();
+        view.changeButtonText(state.filter.result.length);
+    })
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        console.log("SUBMIT");
     })
 }
