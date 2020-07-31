@@ -1,4 +1,9 @@
-export default function (){
-    const markup = '<h1>SinglePage</h1>' ;
-    document.querySelector("#app").innerHTML = markup ;
+import singleItem from "./../singleItem/singleItemController"
+
+export default function (state){
+    // Очищаем контейнер
+    document.querySelector("#app").innerHTML = '' ;
+    // Запускаем контроллер
+    singleItem(state);
+
 }

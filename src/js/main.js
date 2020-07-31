@@ -34,6 +34,9 @@ function router () {
     const pathArray = location.hash.split('/');
     let currentPath = pathArray[0] === '' ? '/' : pathArray[1];
     currentPath = currentPath === '' ? '/' : currentPath; 
+
+    state.routeParams = pathArray[2] ? pathArray[2] : '';
+
     const { component = errorPage } = findComponentByPath(currentPath, routes) || {};
     component(state);
 
