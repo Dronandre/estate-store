@@ -23,8 +23,6 @@ export default class Filter {
         const response = await fetch(queryString);
         const data = await response.json();
         this.result = await data;
-        console.log("Filter -> getResults -> this.result", this.result);
-        
         } catch (error) {
         alert(error);
         }       

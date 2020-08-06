@@ -2,13 +2,12 @@ import SingleItem from './singleItemModel.js';
 import * as view from './singleItemView.js';
 
 export default async function(state){
-    console.log("SingleItemController STARTED !!!");
     // Создаем новый объект
     state.singleItem = new SingleItem(state.routeParams);
     // Получаем данные с сервера
     await state.singleItem.getItem();
     // Рендерим карточку
-    view.render(state.singleItem.result);
+    view.render(state.singleItem.result, state.favourites.isFav(state.singleItem.id));
 
     
     // Запуск прослушки событий
@@ -50,9 +49,14 @@ export default async function(state){
                 alert(item);
             });
         }
+    });
+
+    // Клик по кнопке добавить в избранное
+
+    document.querySelector('#addToFavouriteBtn').addEventListener('click', ()=>{
+        state.favourites.toggleFav(state.singleItem.id);
+        view.toggleFavouriteBtn(state.favourites.isFav(state.singleItem.id));
     })
-
-
 
 
 }

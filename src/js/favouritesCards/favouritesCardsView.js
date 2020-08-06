@@ -1,16 +1,22 @@
-export function render() {
-	const markUp = `<div class="cards-wrapper">
-                        <div class="container p-0 pt-5">                            
-                            <div id="listingContainer" class="row">                                
-                            </div>
-                        </div>
-                    </div>`;
-	document.querySelector("#app").insertAdjacentHTML("beforeend", markUp);
+function renderContainer() {
+	const markUp = `
+        <div class="container p-0 mb-5">
+            <div class="heading-1">Избранное</div>
+        </div>
+        <div class="cards-wrapper">
+            <div class="container p-0">
+                <div id="cardsHolder" class="row">
+
+                </div>
+            </div>
+        </div>
+    `;
+    document.querySelector('#app').insertAdjacentHTML('afterbegin', markUp);
 }
 
-export function renderCard(object, isFaved) {
+function renderCard(object) {
     
-    const listingContainer = document.querySelector('#listingContainer');
+    const cardsContainer = document.querySelector('#cardsHolder');
 
     const markUp = `<article class="col-md-4">
                         <!-- card -->
@@ -19,7 +25,7 @@ export function renderCard(object, isFaved) {
                                 <div class="card__title">
                                     ЖК ${object.complex_name}
                                 </div>
-                                <div class="card__like ${isFaved ? 'card__like--active' : ''}">
+                                <div class="card__like card__like--active">
                                     <i class="fas fa-heart"></i>
                                 </div>
                             </div>
@@ -61,14 +67,15 @@ export function renderCard(object, isFaved) {
                         <!-- // card -->
                     </article>`;
 
-    listingContainer.insertAdjacentHTML('beforeend', markUp);
+    cardsContainer.insertAdjacentHTML('beforeend', markUp);
 }
 
-export function clearListingContainer(){
-
-    const listingContainer = document.querySelector('#listingContainer');
-    listingContainer.innerHTML= '';
-
+export function renderPage(cards){
+    renderContainer();
+    
+    cards.forEach(card => {
+        renderCard(card);
+    });
 }
 
 export function toggleFavoriteIcon(elementIcon, isFaved){
@@ -78,4 +85,3 @@ export function toggleFavoriteIcon(elementIcon, isFaved){
         elementIcon.classList.remove('card__like--active');
     }
 }
-
